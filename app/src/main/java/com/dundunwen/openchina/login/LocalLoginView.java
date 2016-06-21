@@ -20,6 +20,10 @@ import com.orhanobut.logger.Logger;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import rx.Observable;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -38,6 +42,7 @@ public class LocalLoginView extends BaseActivity implements LoginViewImpl {
         ButterKnife.bind(this);
 
         presenter = new LoginPresenter(this, this);
+
 
         findViews();
         initViews();

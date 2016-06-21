@@ -38,7 +38,6 @@ public interface Apis {
 
 
 
-
     public static class Helper {
         public static Apis getSimpleApi() {
             return DefautReftAdapter.getDefautReftAdapter(baseUrl).build().create(Apis.class);
