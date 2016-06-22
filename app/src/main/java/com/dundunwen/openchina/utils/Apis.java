@@ -1,5 +1,7 @@
 package com.dundunwen.openchina.utils;
 
+import com.dundunwen.openchina.bean.BlogDetail;
+import com.dundunwen.openchina.bean.BlogList;
 import com.dundunwen.openchina.bean.HtmlUserInfo;
 
 import java.io.IOException;
@@ -34,9 +36,27 @@ public interface Apis {
                                             @Query("code")String code,
                                             @Query("dataType")String dataType
                                             );
+    @GET("/action/openapi/blog_list")
+    Observable<BlogList> getSynthesizeBlogList(
+            @Query("access_token")String access_token,
+            @Query("page")int page,
+            @Query("pageSize")int pageSize,
+            @Query("dataType")String dataType
+    );
 
-
-
+    @GET("/action/openapi/blog_recommend_list")
+    Observable<BlogList> getRecommentBlogList(
+            @Query("access_token")String access_token,
+            @Query("page")int page,
+            @Query("pageSize")int pageSize,
+            @Query("dataType")String dataType
+    );
+    @GET("/action/openapi/blog_detail")
+    Observable<BlogDetail> getBlogDetail(
+            @Query("access_token")String access_token,
+            @Query("id")long id,
+            @Query("dataType")String dataType
+    );
 
     public static class Helper {
         public static Apis getSimpleApi() {

@@ -43,7 +43,6 @@ public class LocalLoginView extends BaseActivity implements LoginViewImpl {
 
         presenter = new LoginPresenter(this, this);
 
-
         findViews();
         initViews();
         getDatas();

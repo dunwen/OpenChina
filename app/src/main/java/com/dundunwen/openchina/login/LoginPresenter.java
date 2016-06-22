@@ -43,6 +43,7 @@ public class LoginPresenter implements LoginPresenterImpl {
             @Override
             public void call(HtmlUserInfo htmlUserInfo) {
                 HtmlUserInfoHolder.getInstance().setHtmlUserInfo(htmlUserInfo);
+                model.saveHtmlUserInfo(htmlUserInfo);
                 Intent i = new Intent(mContext, MainActivity.class);
                 view.callLoading(false,"");
                 view.startNextView(i);

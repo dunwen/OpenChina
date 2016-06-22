@@ -10,4 +10,5 @@ import rx.Observable;
  */
 public interface LoginModelImpl extends BaseModel{
     Observable<HtmlUserInfo> dispatchAuthorize(String code);
+    void saveHtmlUserInfo(HtmlUserInfo info);
 }
