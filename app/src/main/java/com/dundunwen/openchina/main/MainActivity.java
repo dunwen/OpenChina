@@ -201,14 +201,19 @@ public class MainActivity extends AppCompatActivity
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Action1<User>() {
                     @Override
-                    public void call(User user) {
+                    public void call(final User user) {
                         MyInformationHolder.getInstance().setMyInformation(user);
-                        SimpleDraweeView imageview = (SimpleDraweeView) drawer.findViewById(R.id.header_icon);
-                        imageview.setImageURI(Uri.parse(user.getAvatar()));
-                        TextView userName = (TextView) drawer.findViewById(R.id.header_user_name);
-                        userName.setText("" + user.getName());
-                        TextView address = (TextView) drawer.findViewById(R.id.header_user_email);
-                        address.setText("" + user.getEmail());
+                        mHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                SimpleDraweeView imageview = (SimpleDraweeView) drawer.findViewById(R.id.header_icon);
+                                imageview.setImageURI(Uri.parse(user.getAvatar()));
+                                TextView userName = (TextView) drawer.findViewById(R.id.header_user_name);
+                                userName.setText("" + user.getName());
+                                TextView address = (TextView) drawer.findViewById(R.id.header_user_email);
+                                address.setText("" + user.getEmail());
+                            }
+                        });
                     }
                 }, new Action1<Throwable>() {
                     @Override
