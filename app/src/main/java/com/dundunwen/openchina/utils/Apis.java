@@ -2,7 +2,10 @@ package com.dundunwen.openchina.utils;
 
 import com.dundunwen.openchina.bean.BlogDetail;
 import com.dundunwen.openchina.bean.BlogList;
+import com.dundunwen.openchina.bean.CommentList;
 import com.dundunwen.openchina.bean.HtmlUserInfo;
+import com.dundunwen.openchina.bean.MyInformation;
+import com.dundunwen.openchina.bean.User;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -36,9 +39,23 @@ public interface Apis {
                                             @Query("code")String code,
                                             @Query("dataType")String dataType
                                             );
+    @GET("/action/openapi/user")
+    Observable<User> getUser(
+            @Query("access_token")String access_token,
+            @Query("dataType")String dataType
+    );
+
     @GET("/action/openapi/blog_list")
     Observable<BlogList> getSynthesizeBlogList(
             @Query("access_token")String access_token,
+            @Query("page")int page,
+            @Query("pageSize")int pageSize,
+            @Query("dataType")String dataType
+    );
+    @GET("/action/openapi/user_blog_list")
+    Observable<BlogList> getUserBlogList(
+            @Query("access_token")String access_token,
+            @Query("authoruid")long userId,
             @Query("page")int page,
             @Query("pageSize")int pageSize,
             @Query("dataType")String dataType
@@ -55,6 +72,40 @@ public interface Apis {
     Observable<BlogDetail> getBlogDetail(
             @Query("access_token")String access_token,
             @Query("id")long id,
+            @Query("dataType")String dataType
+    );
+    @GET("/action/openapi/favorite_add")
+    Call<ResponseBody> addFavouir(
+            @Query("access_token")String access_token,
+            @Query("id")long id,
+            @Query("type")int type,
+            @Query("dataType")String dataType
+    );
+    @GET("/action/openapi/favorite_remove")
+    Call<ResponseBody> delFavouir(
+            @Query("access_token")String access_token,
+            @Query("id")long id,
+            @Query("type")int type,
+            @Query("dataType")String dataType
+    );
+    @GET("/action/openapi/my_information")
+    Observable<MyInformation> getMyInformation(
+            @Query("access_token")String access_token,
+            @Query("dataType")String dataType
+    );
+    @GET("/action/openapi/blog_comment_list")
+    Observable<CommentList> getCommentList(
+            @Query("access_token")String access_token,
+            @Query("id")int id,
+            @Query("page")int page,
+            @Query("pageSize")int pagesize,
+            @Query("dataType")String dataType
+    );
+    @GET("/action/openapi/blog_comment_pub")
+    Call<ResponseBody> commentPub(
+            @Query("access_token")String access_token,
+            @Query("blog")long blog,
+            @Query("content")String content,
             @Query("dataType")String dataType
     );
 

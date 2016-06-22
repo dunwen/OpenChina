@@ -5,10 +5,14 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.dundunwen.openchina.BaseActivity;
 import com.dundunwen.openchina.R;
+import com.dundunwen.openchina.bean.CommentList;
 import com.dundunwen.openchina.blog_unit.bloginfo.impls.BlogInfoPresenterImpl;
 import com.dundunwen.openchina.blog_unit.bloginfo.impls.BlogInfoViewImpl;
 import com.dundunwen.openchina.login.LocalLoginView;
@@ -21,6 +25,7 @@ import com.tencent.smtt.sdk.WebViewClient;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by dun on 16/6/22.
@@ -56,12 +61,17 @@ public class BlogInfoView extends BaseActivity implements BlogInfoViewImpl{
         }else{
             id = b.getLong(KEY_ID);
         }
-
         findViews();
         initViews();
         getDatas();
     }
 
+    @OnClick(R.id.blog_info_iv_show_comment)
+    public void showCommend(View view){
+        Intent i = new Intent(this, CommentListActivity.class);
+        i.putExtra(CommentListActivity.KEY_ID,id);
+        startActivity(i);
+    }
 
     @Override
     public void findViews() {
@@ -80,6 +90,30 @@ public class BlogInfoView extends BaseActivity implements BlogInfoViewImpl{
                 return true;
             }
         });
+        ActionBar mBar = getSupportActionBar();
+        if(mBar!=null);
+        mBar.setTitle("博客详情");
+        mBar.setDisplayHomeAsUpEnabled(true);
+        mBar.setDisplayShowHomeEnabled(false);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id){
+            case android.R.id.home :{
+                this.finish();
+            }
+            default:{
+                return super.onOptionsItemSelected(item);
+            }
+        }
+    }
+
+    @OnClick(R.id.blog_info_iv_add_comment)
+    void clickBindView(View v){
+        Intent i = new Intent(this, CommentListActivity.class);
+        i.putExtra(CommentListActivity.KEY_ID,id);
+        startActivity(i);
     }
 
     @Override
@@ -88,13 +122,24 @@ public class BlogInfoView extends BaseActivity implements BlogInfoViewImpl{
     }
 
 
+    @OnClick(R.id.blog_info_iv_favour)
+    void addOrDelFavour(View view){
+        if(!isFavour){
+            presenter.addFavorite(id);
+        }else{
+            presenter.delFavorite(id);
+        }
+    }
+
+
     @Override
     public void setWebViewContent(String content) {
         mWebView.loadDataWithBaseURL(Apis.baseUrl, content, "text/html", "UTF-8", Apis.baseUrl);
     }
-
+    boolean isFavour = false;
     @Override
     public void setIsFavour(boolean isFavour) {
+        this.isFavour = isFavour;
         if(isFavour){
             ic_favour.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.mipmap.ic_favour));
         }else{

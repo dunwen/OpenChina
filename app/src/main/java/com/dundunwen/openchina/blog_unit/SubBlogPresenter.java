@@ -47,12 +47,23 @@ public class SubBlogPresenter implements SubBlogPresenterImpl {
             getSynthesize(mView,type,isReload);
         }else if(type.equals(SubBlogView.TYPE_RECOMMEND)){
             getRecomment(mView,type,isReload);
+        }else if(type.equals(SubBlogView.TYPE_ME)){
+            getUserBlogList(mView,type,isReload);
         }
     }
 
-    private void getRecomment(RecyclerView mView, String type, boolean isReload) {
-        view.dismissRefreshLayout(true);
+    private void getUserBlogList(RecyclerView mView, String type, boolean isReload) {
         if(isReload){
+            view.dismissRefreshLayout(true);
+            blogSummaries.clear();
+            currentPage = 0;
+        }
+        setBlogSummaries(model.getUserBlogList(currentPage++,20),mView);
+    }
+
+    private void getRecomment(RecyclerView mView, String type, boolean isReload) {
+        if(isReload){
+            view.dismissRefreshLayout(true);
             blogSummaries.clear();
             currentPage = 0;
         }
@@ -60,21 +71,32 @@ public class SubBlogPresenter implements SubBlogPresenterImpl {
     }
 
     private void getSynthesize(final RecyclerView mView, String type, boolean isReload) {
-        view.dismissRefreshLayout(true);
         if(isReload){
+            view.dismissRefreshLayout(true);
             blogSummaries.clear();
             currentPage = 0;
         }
+
         setBlogSummaries(model.getSynthesizeBlogList(currentPage++,20),mView);
     }
 
+    boolean isNoMoreData =false;
     private  void setBlogSummaries(Observable<BlogList> observable,final RecyclerView mView){
-
+        if(isNoMoreData){
+            return;
+        }
+        if(observable == null){
+            initRecyclerView(mView,null);
+            return;
+        }
         observable.subscribe(new Action1<BlogList>() {
             @Override
-            public void call(BlogList blogList) {
+            public void call(final BlogList blogList) {
                 final int from = blogSummaries.size();
-                blogSummaries.addAll(blogList.getBloglist());
+                if(blogList.getBloglist()!=null){
+                    blogSummaries.addAll(blogList.getBloglist());
+                }
+
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
@@ -87,6 +109,10 @@ public class SubBlogPresenter implements SubBlogPresenterImpl {
                             }
                         }else{
                             initRecyclerView(mView,adapter);
+                        }
+                        if(blogList.getBloglist()==null||blogList.getBloglist().size()<20){
+                            isNoMoreData = true;
+                            ((BlogListRVAdapter)mView.getAdapter()).isNoMoreData(true);
                         }
                         view.dismissRefreshLayout(false);
                     }

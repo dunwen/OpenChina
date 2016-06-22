@@ -6,9 +6,11 @@
     android:gravity="center"
     >
     <ProgressBar
+        android:id="@+id/foot_pb"
         android:layout_width="24dp"
         android:layout_height="24dp" />
     <TextView
+        android:id="@+id/foot_tv_msg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="正在获取数据~"

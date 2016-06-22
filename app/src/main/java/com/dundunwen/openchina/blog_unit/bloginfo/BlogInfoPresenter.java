@@ -2,6 +2,7 @@ package com.dundunwen.openchina.blog_unit.bloginfo;
 
 import android.content.Context;
 import android.os.Handler;
+import android.widget.Toast;
 
 import com.dundunwen.openchina.bean.BlogDetail;
 import com.dundunwen.openchina.blog_unit.bloginfo.impls.BlogInfoModelImpl;
@@ -9,10 +10,17 @@ import com.dundunwen.openchina.blog_unit.bloginfo.impls.BlogInfoPresenterImpl;
 import com.dundunwen.openchina.blog_unit.bloginfo.impls.BlogInfoViewImpl;
 import com.orhanobut.logger.Logger;
 
+import java.io.IOException;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import rx.functions.Action1;
 
 /**
  * Created by dun on 16/6/22.
+ *
  */
 public class BlogInfoPresenter implements BlogInfoPresenterImpl{
     BlogInfoModelImpl model;
@@ -51,6 +59,54 @@ public class BlogInfoPresenter implements BlogInfoPresenterImpl{
                         view.showError(-1,"网络请求错误");
                     }
                 });
+            }
+        });
+    }
+
+    @Override
+    public void addFavorite(long id) {
+        model.addFavorite(id).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    if(response.body().string().contains("200")){
+                        Toast.makeText(mContext,"添加收藏成功",Toast.LENGTH_SHORT).show();
+                        view.setIsFavour(true);
+                    }else{
+                        Toast.makeText(mContext,"添加收藏失败",Toast.LENGTH_SHORT).show();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(mContext,"添加收藏失败",Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void delFavorite(long id) {
+        model.delFavorite(id).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    if(response.body().string().contains("200")){
+                        Toast.makeText(mContext,"取消收藏成功",Toast.LENGTH_SHORT).show();
+                        view.setIsFavour(false);
+                    }else{
+                        Toast.makeText(mContext,"取消收藏失败",Toast.LENGTH_SHORT).show();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(mContext,"取消收藏失败",Toast.LENGTH_SHORT).show();
             }
         });
     }

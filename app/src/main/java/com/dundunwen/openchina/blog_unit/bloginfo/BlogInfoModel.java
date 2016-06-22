@@ -8,6 +8,8 @@ import com.dundunwen.openchina.blog_unit.bloginfo.impls.BlogInfoPresenterImpl;
 import com.dundunwen.openchina.singleton.HtmlUserInfoHolder;
 import com.dundunwen.openchina.utils.Apis;
 
+import okhttp3.ResponseBody;
+import retrofit2.Call;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 
@@ -27,5 +29,17 @@ public class BlogInfoModel implements BlogInfoModelImpl {
     public Observable<BlogDetail> getBlogDetail(long id) {
         String token  = HtmlUserInfoHolder.getInstance().getHtmlUserInfo().getAccess_token();
         return Apis.Helper.getSimpleApi().getBlogDetail(token,id,"json").subscribeOn(Schedulers.io());
+    }
+
+    @Override
+    public Call<ResponseBody> addFavorite(long id) {
+        String token  = HtmlUserInfoHolder.getInstance().getHtmlUserInfo().getAccess_token();
+        return Apis.Helper.getSimpleApi().addFavouir(token,id,3,"json");
+    }
+
+    @Override
+    public Call<ResponseBody> delFavorite(long id) {
+        String token  = HtmlUserInfoHolder.getInstance().getHtmlUserInfo().getAccess_token();
+        return Apis.Helper.getSimpleApi().delFavouir(token,id,3,"json");
     }
 }

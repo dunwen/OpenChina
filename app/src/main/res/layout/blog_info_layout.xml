@@ -31,6 +31,7 @@
             android:layout_height="28dp"
             android:layout_gravity="center"
             android:layout_margin="8dp"
+            android:background="@drawable/ripple_bg_iv"
             android:layout_weight="1"
             android:src="@mipmap/ic_keybord" />
 
@@ -44,6 +45,7 @@
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:layout_gravity="center"
+            android:background="@drawable/ripple_bg_iv"
             android:layout_weight="1"
             android:src="@mipmap/edit" />
 
@@ -53,6 +55,7 @@
             android:layout_height="28dp"
             android:layout_gravity="center"
             android:layout_weight="1"
+            android:background="@drawable/ripple_bg_iv"
             android:src="@mipmap/ic_commend" />
 
         <ImageView
@@ -61,7 +64,9 @@
             android:layout_height="28dp"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:src="@mipmap/ic_favour" />
+            android:src="@mipmap/ic_favour"
+            android:background="@drawable/ripple_bg_iv"
+            />
 
         <ImageView
             android:id="@+id/blog_info_iv_share"
@@ -69,6 +74,7 @@
             android:layout_height="28dp"
             android:layout_gravity="center"
             android:layout_weight="1"
+            android:background="@drawable/ripple_bg_iv"
             android:src="@mipmap/share" />
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

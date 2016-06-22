@@ -15,4 +15,5 @@ import rx.Observable;
 public interface SubBlogModelImpl extends BaseModel{
     Observable<BlogList> getSynthesizeBlogList(int page,int pageSize);
     Observable<BlogList> getRecommentBlogList(int page,int pageSize);
+    Observable<BlogList> getUserBlogList(int page,int pageSize);
 }

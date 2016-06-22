@@ -7,4 +7,6 @@ import com.dundunwen.openchina.basemvp.BasePresenter;
  */
 public interface BlogInfoPresenterImpl extends BasePresenter{
     void getAllDatas(long id);
+    void addFavorite(long id);
+    void delFavorite(long id);
 }

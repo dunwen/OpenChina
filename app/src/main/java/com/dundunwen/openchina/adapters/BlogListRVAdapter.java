@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.dundunwen.openchina.R;
@@ -48,11 +49,19 @@ public class BlogListRVAdapter extends RecyclerView.Adapter<BlogListRVAdapter.My
         }
         return holder;
     }
-
+    boolean isNoMoreData = false;
+    public void isNoMoreData(boolean is){
+        if(is){
+            this.isNoMoreData = is;
+            this.notifyDataSetChanged();
+        }
+    }
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         if(position<blogSummaries.size()){
             holder.bindDatas(blogSummaries.get(position),listener,position);
+        }else{
+            holder.setIsNoMoreData(isNoMoreData);
         }
     }
 
@@ -80,6 +89,8 @@ public class BlogListRVAdapter extends RecyclerView.Adapter<BlogListRVAdapter.My
         @BindView(R.id.rvitem_tv_pub_time)
         TextView tv_pubTime;
         View itemView;
+        ProgressBar pv;
+        TextView tv_footMsg;
         public MyViewHolder(View itemView) {
             super(itemView);
             this.itemView = itemView;
@@ -87,6 +98,8 @@ public class BlogListRVAdapter extends RecyclerView.Adapter<BlogListRVAdapter.My
             tv_commentTime = (TextView) itemView.findViewById(R.id.rvitem_tv_comment_time);
             tv_author = (TextView) itemView.findViewById(R.id.rvitem_tv_blog_author);
             tv_pubTime = (TextView) itemView.findViewById(R.id.rvitem_tv_pub_time);
+            pv = (ProgressBar) itemView.findViewById(R.id.foot_pb);
+            tv_footMsg = (TextView) itemView.findViewById(R.id.foot_tv_msg);
 
         }
         public void bindDatas(BlogSummary summary, final ItemClick listener, final int positon){
@@ -104,6 +117,19 @@ public class BlogListRVAdapter extends RecyclerView.Adapter<BlogListRVAdapter.My
                         listener.onItemClick(positon);
                     }
                 });
+            }
+        }
+
+        public void setIsNoMoreData(boolean is){
+            if(pv!=null&&tv_footMsg!=null){
+                if(is){
+                    pv.setVisibility(View.GONE);
+                    tv_footMsg.setText("没有更多数据啦~");
+                }else{
+                    pv.setVisibility(View.VISIBLE);
+                    tv_footMsg.setText("正在加载数据...");
+                }
+
             }
         }
     }

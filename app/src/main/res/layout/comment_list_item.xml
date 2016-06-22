@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:fresco="http://schemas.android.com/tools"
+    android:orientation="horizontal">
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/commentlist_item_head_icon"
+        android:layout_margin="8dp"
+        fresco:roundedCornerRadius="3dp"
+        android:src="@mipmap/ic_look"
+        android:layout_width="48dp"
+        android:layout_height="48dp" />
+    <LinearLayout
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="8dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/commentlist_item_author"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:text="顿顿"
+            android:textColor="@color/primary_dark"
+            />
+        <TextView
+            android:id="@+id/commentlist_item_refers"
+            android:padding="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#585858"
+            android:background="@color/primary_light"
+            android:text="引用自’asf‘的评论\n好长好长好长好长好长好长好长好长好长好长好长好长好长好长好长好长好长好长"
+            />
+        <TextView
+            android:id="@+id/commentlist_item_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="很好很好很好很好很好很好很好很好"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:background="#bcbcbc"
+            />
+    </LinearLayout>
+
+</LinearLayout>

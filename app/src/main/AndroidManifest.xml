@@ -5,8 +5,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
         android:name=".App"
@@ -18,21 +18,19 @@
         <activity
             android:name=".main.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"
-            >
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".login.HtmlLoginView">
-        </activity>
-        <activity android:name=".login.LocalLoginView"
-            android:launchMode="singleTask">
-        </activity>
-        <activity android:name=".blog_unit.bloginfo.BlogInfoView"
-           >
-        </activity>
+        <activity android:name=".login.HtmlLoginView"></activity>
+        <activity
+            android:name=".login.LocalLoginView"
+            android:launchMode="singleTask"></activity>
+        <activity android:name=".blog_unit.bloginfo.BlogInfoView"></activity>
+        <activity android:name=".blog_unit.bloginfo.CommentListActivity"></activity>
     </application>
 
 </manifest>
